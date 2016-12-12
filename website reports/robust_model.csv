@@ -1,0 +1,17 @@
+                   Logit Regression Results                   
+Dep. Variable:,y               ,  No. Observations:  ,118033  
+Model:        ,Logit           ,  Df Residuals:      ,118025  
+Method:       ,MLE             ,  Df Model:          ,     7  
+Date:         ,Sun, 11 Dec 2016,  Pseudo R-squ.:     ,0.04175 
+Time:         ,19:53:09        ,  Log-Likelihood:    , -77932.
+converged:    ,True            ,  LL-Null:           , -81328.
+              ,                ,  LLR p-value:       , 0.000  
+               ,   coef   , std err ,    z    ,P>|z| , [95.0% Conf. Int.]
+previous_streak,   -0.0094,    0.003,   -3.133, 0.002,   -0.015    -0.004
+final_margin   ,    0.0092,    0.000,   19.886, 0.000,    0.008     0.010
+dribbles       ,    0.0330,    0.005,    7.067, 0.000,    0.024     0.042
+touch_time     ,   -0.0678,    0.005,  -12.488, 0.000,   -0.078    -0.057
+shot_dist      ,   -0.0615,    0.001,  -74.267, 0.000,   -0.063    -0.060
+close_def_dist ,    0.1049,    0.003,   37.026, 0.000,    0.099     0.110
+fg_percent     ,    0.7319,    0.030,   24.024, 0.000,    0.672     0.792
+shot_clock     ,    0.0001,    0.000,    1.278, 0.201,-7.95e-05     0.000
