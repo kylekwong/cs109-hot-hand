@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>The Hot Hand is Dead</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">The Hot Hand is Dead</h1>
+      <h2 class="project-tagline">An Analysis of the Legitimacy of the Hot Hand Theory in Basketball</h2>
+      <a href="https://github.com/kylekwong/cs109-hot-hand" class="btn">View on GitHub</a>
+      <a href="https://github.com/kylekwong/cs109-hot-hand/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/kylekwong/cs109-hot-hand/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="extending-our-analysis-the-clutch-factor" class="anchor" href="#extending-our-analysis-the-clutch-factor" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extending our Analysis: The Clutch Factor</h1>
+
+<h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h2>
+
+<p>After completing our analysis of the Hot Hand theory, we wanted to apply a similar analysis to another theory in basketball, the clutch factor. There is a perception among players and fans alike that certain players elevate their performance in important moments, such as when the score is close or the game is in its final minutes. The idea is that “clutch” players are more likely to make these big shots in these critical moments. This is a similar perception to the Hot Hand with streakiness, and therefore we believe that a similar analysis will allow us to explore if the clutch factor is another fallacy, or may actually be true. </p>
+
+<h2>
+<a id="defining-clutch-score" class="anchor" href="#defining-clutch-score" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Defining "Clutch Score"</h2>
+
+<p>For our analysis, we created a <code>clutch_score</code> variable that measures the degree of how clutch a given shot is. Clutch can be defined as the following: During a critical moment of the game, how much will this shot improve the chances of my team winning?</p>
+
+<p>In our given dataset, there are a few variables we believe define a clutch shot. These include</p>
+
+<ul>
+<li>
+<code>game_clock</code>: How much time is left in the game? In the closing seconds of a game, a made shot would be more clutch. We define clutch time as any point in the game with &lt; 5 minutes (300s) remaining in the 4th quarter, which is the same way the NBA defines it.</li>
+<li>
+<code>pts_type</code>: What type of shot was taken? A 3-point shot would be more clutch than a 2-pointer since it affects your team's score more.</li>
+<li>
+<code>final_margin</code>: What was the ending score of the game? Shots made in a close game are more clutch than in a game that has one team with a big lead. Ideally, we would've liked to use the margin of the score at the time of the game, but our dataset does not provide that information, so we used <code>final_margin</code> instead. We use the absolute value of <code>final_margin</code>, and define shots with a <code>final_margin</code> &gt; 6 as not clutch, since that is greater than a 2 possession game.</li>
+</ul>
+
+<p>We can combine these variables to create our final <code>clutch_score</code>, which we defined as:</p>
+
+<p><img src="https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/ClutchFactorWriteup_images/image001.png?raw=true" alt="Clutch Score Equation"></p>
+
+<p>This gives us a dimensionless parameter and ensures that each parameter is given equal weight. A larger number translates to a more clutch shot. For all shots not taken in the 4th quarter with less 5 minutes left, <code>clutch_score</code> = 0. Also, for all shots taken in a game with a <code>final_margin</code> &gt; 6, <code>clutch_score</code> = 0.</p>
+
+<h2>
+<a id="fitting-an-initial-model" class="anchor" href="#fitting-an-initial-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fitting an Initial Model</h2>
+
+<p>After calculating the <code>clutch_score</code> for all shots in our dataset, we proceeded with fitting a model to our data. Our initial fitting would be testing across the entire NBA is <code>clutch_score</code> was a positive predictor for a made shot. We first fit a logistic regression (just like for the Hot Hand) with the only predictor being <code>clutch_score</code>. Our model gave us the following results:</p>
+
+<p><img src="https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/ClutchFactorWriteup_images/image002.png?raw=true" alt="Model Result Table"></p>
+
+<p>We see that without any other predictors, the coefficient on clutch_score is estimated to be essentially 0, suggesting it has no effect on if the shot is made. Further, the model barely performs better than a 50% classification rate, suggesting it’s hardly better than just flipping a coin. If we plot the logistic model vs. <code>clutch_score</code>, we get the following:</p>
+
+<p><img src="https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/ClutchFactorWriteup_images/image003.png?raw=true" alt="clutch_score Logistic Model"></p>
+
+<p>From this graph we can see that our logistic model is essentially useless, and appears to be almost horizontal. This suggests that <code>clutch_score</code> isn’t a very good predictor. We can also use the <code>statsmodel</code> package to gather more information about our <code>clutch_score</code> predictor:</p>
+
+<p><img src="https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/ClutchFactorWriteup_images/image004.png?raw=true" alt="statsmodel results"></p>
+
+<p>We see that the p-value for our coefficient is 0.015, which is less than the 0.05 cutoff, telling us that this predictor coefficient is significant. This shows us that by itself, clutch_score is a significantly poor predictor of a made shot. It doesn’t appear that an increase in clutch_score means a shot is more likely to go in from a league-wide standpoint.</p>
+
+<h2>
+<a id="incorporating-confounding-variables" class="anchor" href="#incorporating-confounding-variables" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Incorporating Confounding Variables</h2>
+
+<p>One reason our initial model performs poorly is that we don’t take into account any factors that may be affecting difficulty of the shot or how talented the player who is shooting it is. We want to try to control for these variables, so therefore we will include them as predictors in our model. </p>
+
+<p>Based on our dataset, the variables we’ll add are:</p>
+
+<ul>
+<li>Dribbles: number of dribbles taken before the shot</li>
+<li>Touch Time:  time holding the ball before the shot</li>
+<li>Shot Distance: how far away the shot was taken from</li>
+<li>Closest Defender Distance: how close the nearest defender was</li>
+<li>Field Goal Percentage: the shooting percentage for the given player</li>
+<li>Shot Clock: amount of time left on the shot clock</li>
+</ul>
+
+<p>When we run a logistic regression model including all these variables along with <code>clutch_score</code>, we get the following information about each variable:</p>
+
+<p><img src="https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/ClutchFactorWriteup_images/image005.png?raw=true" alt="Multiple Variables Results Table"></p>
+
+<p>We can examine the coefficient values (<code>coef</code>) and p-values (<code>P &gt; |z|</code>) to see how each variable affects the probability of the shot going in and if it is a significant predictor. This new model shows us that the <code>clutch_score</code> coefficient is again practically 0, suggesting that once again it is not a positive predictor for shot probability. Its p-value = 0.467, which is much greater than 0.05, showing us that it is not significant in this model. It appears that despite accounting for confounding variables, there is no support for a clutch factor for the league as a whole.</p>
+
+<h2>
+<a id="extending-analysis-to-individual-players" class="anchor" href="#extending-analysis-to-individual-players" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Extending Analysis to Individual Players</h2>
+
+<p>It is not surprising that the clutch factor doesn't appear to exist across the league according to our above analysis. The theory is that there are certain players that are clutch, not that everyone is more clutch. Thus, it is important to extend our analysis to individual players to see if there are individually clutch players, as the theory suggests. We evaluate the model on the Top 50 players, as determined by the same <code>player_score</code> metric determined for the Hot Hand. </p>
+
+<p><strong>Important Note</strong>: As we evaluate the model on a large number of players, we have to keep in mind the issue of multiple comparisons, as we did for the hot hand analysis. This idea says that as we're comparing p-values across a large number of independent samples, there is a high chance of at least one having a p-value &lt; 0.05 due to probability distribution alone and not necessarily due to significance. We have to adjust what our p-value cutoff for significance is. In this case, multiple comparisons across 50 samples says our proper p-value will be:</p>
+
+<p><img src="https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/ClutchFactorWriteup_images/image006.png?raw=true" alt="New p-value Equation"></p>
+
+<p>After fitting a different model for each of the Top 50 players, we can split them up into ‘Clutch Players’, aka players who had a positive coefficient on the <code>clutch_score</code> predictor, and ‘Choke Artists’, aka players who had a negative coefficient on the <code>clutch_score</code> predictor. We examine the Top 10 Clutch Players and Top 10 Choke Artists below. </p>
+
+<p><strong>Top 10 Choke Artist Results</strong>
+<img src="https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/ClutchFactorWriteup_images/image007.png?raw=true" alt="New p-value Equation"></p>
+
+<p>Looking at players with negative clutch score coefficients, we see that no p-values are &lt; .00103 or even &lt; .05, and therefore we can't determine our results to be significant. Thus for our data and model, we can't declare any player to definitely be a choke artist. Clutch_score doesn’t appear to have any bearing on affecting a player’s shot probability negatively. </p>
+
+<h2>
+<a id="conclusions" class="anchor" href="#conclusions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Conclusions</h2>
+
+<p>This analysis of Clutch Factor presents results that, based on our data and implementation of a clutch score, don't support the idea of players being clutch towards the ends of games. With more variables and shot data available, we could try to find stronger support for our findings and potentially find that there may be some players who could be called clutch. Like discussed before, a flaw of our data is that we don't have a variable for the game score at the time of the shot, but only the final margin, so we can't fully measure just how close a game is in a given instance. This information would provide better measurements of our <code>clutch_score</code> and may help further inform our model. Further study should also be done by varying the definition of <code>clutch_score</code>, as there may be a more accurate way to define how clutch a given shot is. For our definition of <code>clutch_score</code>, we didn't find any support for the Clutch Factor theory, but other definitions of <code>clutch_score</code> may provide different results. </p>
+
+<p><strong>For our analysis of the data, we can conclude that the Clutch Factor is just another fallacy.</strong></p>
+
+    </section>
+
+  
+  </body>
+</html>
