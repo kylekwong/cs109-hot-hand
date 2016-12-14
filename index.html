@@ -36,7 +36,9 @@
 <h1>
 <a id="methods" class="anchor" href="#methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods</h1>
 
-<p>We extract publicly available shot data from the 2013-14 NBA season containing information on the game, player, and other factors in which the shot occurred. From this data, we are able to construct a previous streak metric which will serve as our primary predictor in our analysis. We then fit a logistic regression model:</p>
+<p>We extract publicly available shot data from the 2013-14 NBA season containing information on the game, player, and other factors in which the shot occurred. From this data, we are able to construct a previous streak metric which will serve as our primary predictor in our analysis. The previous streak (<code>PreviousStreak</code> and <code>previous_streak</code>, used interchangeably) metric is equal to the number of shots made in a row (or missed in a row) prior to the shot in question. For consecutive misses, the value of the previous streak variable is negative.</p>
+
+<p>We then fit a logistic regression model:</p>
 
 <p><img src="https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/equation.png?raw=true" alt="model equation"></p>
 
@@ -44,8 +46,6 @@
 
 <h1>
 <a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results</h1>
-
-<p>The <code>previous_streak</code> metric is equal to the number of shots made in a row (or missed in a row) prior to the shot in question. For consecutive misses, the value of the <code>previous_streak</code> is negative.</p>
 
 <h2>
 <a id="nba-wide" class="anchor" href="#nba-wide" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NBA-Wide</h2>
