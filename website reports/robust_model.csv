@@ -2,8 +2,8 @@
 Dep. Variable:,y               ,  No. Observations:  ,118033  
 Model:        ,Logit           ,  Df Residuals:      ,118025  
 Method:       ,MLE             ,  Df Model:          ,     7  
-Date:         ,Mon, 12 Dec 2016,  Pseudo R-squ.:     ,0.04175 
-Time:         ,20:02:00        ,  Log-Likelihood:    , -77932.
+Date:         ,Wed, 14 Dec 2016,  Pseudo R-squ.:     ,0.04175 
+Time:         ,01:17:15        ,  Log-Likelihood:    , -77932.
 converged:    ,True            ,  LL-Null:           , -81328.
               ,                ,  LLR p-value:       , 0.000  
                ,   coef   , std err ,    z    ,P>|z| , [95.0% Conf. Int.]
