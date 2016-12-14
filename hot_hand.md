@@ -78,6 +78,9 @@ The results of this regression can be found in the table below. The columns for 
 
 ![Binary Heat Table](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/binary_heat.jpg?raw=true)
 
+## Conclusions
+Despite fitting individual logistic regression models on our Top 20 players, and testing for both binary and non-binary streaks, we still found that previous_streak lacked any strong predictive value. No models found previous_streak to be a significant factor in a shot’s probability. It appears therefore that the Hot Hand theory exists for neither individuals nor the league as a whole, suggesting that the Hot Hand is in fact a fallacy.
+
 ## References
 1. Gilovich, Thomas et al. “The Hot Hand in Basketball: On the Misperception of Random Sequences.” Cognitive Psychology, vol. 17, no. 3, 1985, pp. 295–314. 
 2. Bocskocsky, Andrew et al. “The Hot Hand: A New Approach to an Old ‘Fallacy.’” MIT Sloan Analytics Conference, 28 Feb. 2014.
