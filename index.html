@@ -19,22 +19,35 @@
     </section>
 
     <section class="main-content">
-      <h1>
-<a id="project-overview" class="anchor" href="#project-overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Project Overview</h1>
-
-<h3>
-<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation</h3>
+      <h2>
+<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation</h2>
 
 <p>Widely held to be true by many sports fans, the "hot hand" theory is the belief that a person who has experienced success with a seemingly random event has a greater chance of further success in additional attempts. In the context of basketball, this is the belief that as a player continuously makes successful, sequential shots (i.e. when they're on a streak), their next shot has a higher chance of success than if they were not on a streak. Most studies in the past have shown that the hot hand theory is fallacious; however, a recent study has provided some convincing evidence that the hot hand theory might not be so far-fetched after all. The goal of our project is to see for ourselves if the hot hand theory is in fact merely a falsehood. </p>
 
-<h3>
-<a id="how-the-hot-hand-would-look" class="anchor" href="#how-the-hot-hand-would-look" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How the Hot Hand would Look</h3>
+<h2>
+<a id="how-the-hot-hand-would-look" class="anchor" href="#how-the-hot-hand-would-look" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How the Hot Hand would Look</h2>
 
 <p>A statistical model of the hot hand might look something like </p>
 
-<p><img src="../visuals/positive%20logit%20model.png" alt="Logistic Function"></p>
+<p></p>
+<img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/visuals/positive%20logit%20model.png?raw=true" alt="Logistic Function">
+
 
 <p>Depicted above is a logistic regression classifier that predicts a binary outcome (1 or 0 or in the case of the hot hand, shot made or missed) given some predictor. In the case of the hot hand, that predictor (the variable along the x axis) is the shooter’s previous streak. If the logistic regression predicts that the probability of making a shot increases as the player’s streak increases, this indicates the player has the hot hand.</p>
+
+<h2>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods</h2>
+
+<p>We extract publicly available shot data from the 2013-14 NBA season containing information on the game, player, and other factors in which the shot occurred. From this data, we are able to construct a previous streak metric which will serve as our primary predictor in our analysis. We then fit a logistic regression model:</p>
+
+<p></p>
+<img src="http://mathurl.com/gm6h7cn.png" alt="model equation">
+
+
+<p>where X<sub>s</sub> represents a vector of shot information including shot distance, closest defender’s distance, shooter’s overall field goal percentage, shot clock, final margin of the game, amongst other predictors. β<sub>1</sub> represents the hot hand effects, i.e. the increase in probability of making a shot for each addition to a player’s streak.</p>
+
+<h2>
+<a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results</h2>
 
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
