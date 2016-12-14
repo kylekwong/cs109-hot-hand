@@ -102,6 +102,38 @@
 
 <p>The results of this regression can be found in the table below. The columns for each variable name contain the coefficient calculated by our regression, and the column next to each variable (labeled p-Value#) is the corresponding p-value to the coefficient in the column to its left. Once again, due to multiple comparison's and a lower threshold for statistical significance, none of the players were found to have a statistically significant coefficient on any of the binary streak methods, further proving that the hot-hand is indeed dead.</p>
 
+<div class="highlight highlight-source-python"><pre><span class="pl-c"># create lists for each new heat variable</span>
+hot2 <span class="pl-k">=</span> []
+hot3 <span class="pl-k">=</span> []
+hot4 <span class="pl-k">=</span> []
+
+<span class="pl-c"># fill each list with correct indicator</span>
+<span class="pl-c"># 1 for hot, 0 for not</span>
+<span class="pl-k">for</span> index, row <span class="pl-k">in</span> data.iterrows():
+  <span class="pl-k">if</span> row[<span class="pl-s"><span class="pl-pds">'</span>previous_streak<span class="pl-pds">'</span></span>] <span class="pl-k">&gt;=</span> <span class="pl-c1">2</span>):
+    hot2.append(<span class="pl-c1">1</span>)
+  <span class="pl-k">else</span>:
+    hot2.append(<span class="pl-c1">0</span>)
+
+<span class="pl-k">for</span> index, row <span class="pl-k">in</span> data.iterrows():
+  <span class="pl-k">if</span> row[<span class="pl-s"><span class="pl-pds">'</span>previous_streak<span class="pl-pds">'</span></span>] <span class="pl-k">&gt;=</span> <span class="pl-c1">3</span>:
+    hot3.append(<span class="pl-c1">1</span>)
+  <span class="pl-k">else</span>:
+    hot3.append(<span class="pl-c1">0</span>)
+
+<span class="pl-k">for</span> index, row <span class="pl-k">in</span> data.iterrows():
+  <span class="pl-k">if</span> row[<span class="pl-s"><span class="pl-pds">'</span>previous_streak<span class="pl-pds">'</span></span>] <span class="pl-k">&gt;=</span> <span class="pl-c1">4</span>:
+    hot4.append(<span class="pl-c1">1</span>)
+  <span class="pl-k">else</span>:
+    hot4.append(<span class="pl-c1">0</span>)
+
+<span class="pl-c"># create new columns</span>
+data[<span class="pl-s"><span class="pl-pds">'</span>hot2] = hot2<span class="pl-ii"></span></span>
+data[<span class="pl-s"><span class="pl-pds">'</span>hot3] = hot3<span class="pl-ii"></span></span>
+data[<span class="pl-s"><span class="pl-pds">'</span>hot4] = hot4<span class="pl-ii"></span></span></pre></div>
+
+<p><img src="https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/binary_heat.jpg?raw=true" alt="Binary Heat Table"></p>
+
 <h2>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h2>
 
