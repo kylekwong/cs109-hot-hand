@@ -64,6 +64,7 @@ After fitting a different model for each of the Top 50 players, we can split the
 
 Based on these results, it appears that Anthony Davis is the most clutch of our Top 50 players, with a clutch_score coefficient of 1.477. This suggests that every time we increase the clutch_score of a shot by 1, Anthony Davis’ chance of making that shot increases by 1.477%. The p-value of this coefficient is 0.027092, which doesn’t pass our Multiple Comparisons adjusted criteria of p = 0.00103, so we cannot conclude that Anthony Davis’ model is significant. In fact, when we examine all of our results, we see that none of our players actually have a significant result for the clutch_score coefficient.
 In regards to the lack of significance of our results, we see that based on 'Number of Clutch Shots Taken', we are working with quite small sample sizes for our data and therefore it is difficult for our model to draw strong conclusions. If we were working with more data, we could further explore some other potentially clutch players for who we don't currently have enough data for.
+
 With these findings, our model implementation suggests that there is no support for Clutch Factor. No player appears to be individually clutch.
 
 **Top 10 Choke Artist Results**
