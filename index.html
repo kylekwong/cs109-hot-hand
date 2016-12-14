@@ -19,38 +19,80 @@
     </section>
 
     <section class="main-content">
-      <h2>
-<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation</h2>
+      <h1>
+<a id="motivation" class="anchor" href="#motivation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Motivation</h1>
 
 <p>Widely held to be true by many sports fans, the "hot hand" theory is the belief that a person who has experienced success with a seemingly random event has a greater chance of further success in additional attempts. In the context of basketball, this is the belief that as a player continuously makes successful, sequential shots (i.e. when they're on a streak), their next shot has a higher chance of success than if they were not on a streak. Most studies in the past have shown that the hot hand theory is fallacious; however, a recent study has provided some convincing evidence that the hot hand theory might not be so far-fetched after all. The goal of our project is to see for ourselves if the hot hand theory is in fact merely a falsehood. </p>
 
-<h2>
-<a id="how-the-hot-hand-would-look" class="anchor" href="#how-the-hot-hand-would-look" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How the Hot Hand would Look</h2>
+<h1>
+<a id="how-the-hot-hand-would-look" class="anchor" href="#how-the-hot-hand-would-look" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How the Hot Hand would Look</h1>
 
 <p>A statistical model of the hot hand might look something like </p>
 
-<p></p>
-<img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/visuals/positive%20logit%20model.png?raw=true" alt="Logistic Function">
-
+<p><img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/visuals/positive%20logit%20model.png?raw=true" alt="Logistic Function"></p>
 
 <p>Depicted above is a logistic regression classifier that predicts a binary outcome (1 or 0 or in the case of the hot hand, shot made or missed) given some predictor. In the case of the hot hand, that predictor (the variable along the x axis) is the shooter’s previous streak. If the logistic regression predicts that the probability of making a shot increases as the player’s streak increases, this indicates the player has the hot hand.</p>
 
-<h2>
-<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods</h2>
+<h1>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Methods</h1>
 
 <p>We extract publicly available shot data from the 2013-14 NBA season containing information on the game, player, and other factors in which the shot occurred. From this data, we are able to construct a previous streak metric which will serve as our primary predictor in our analysis. We then fit a logistic regression model:</p>
 
-<p></p>
-<img src="http://mathurl.com/gm6h7cn.png" alt="model equation">
-
+<p><img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/visuals/equation.png?raw=true" alt="model equation"></p>
 
 <p>where X<sub>s</sub> represents a vector of shot information including shot distance, closest defender’s distance, shooter’s overall field goal percentage, shot clock, final margin of the game, amongst other predictors. β<sub>1</sub> represents the hot hand effects, i.e. the increase in probability of making a shot for each addition to a player’s streak.</p>
 
+<h1>
+<a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results</h1>
+
 <h2>
-<a id="results" class="anchor" href="#results" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Results</h2>
+<a id="nba-wide" class="anchor" href="#nba-wide" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NBA-Wide</h2>
 
 <h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a id="single-predictor-model" class="anchor" href="#single-predictor-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Single Predictor Model</h3>
+
+<p>The baseline logistic regression model on the entire dataset returns a very small coefficient and one that is insignificant with a large standard error as you can see in the below output.</p>
+
+<p><img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/visuals/SpecificLogitModel.JPG?raw=true" alt="Logit Model with 1 Predictor"></p>
+
+<p>The above figures demonstrate how difficult it is to build a useful model with only the <code>previous_streak</code> variable. The image displays the logit model and how it would predict whether a shot was made or not depending on the current value of <code>previous_streak</code>. If <code>previous_streak</code> had a strong correlation with whether the shot was made or not, then the line would have a more dramatic slope. If anything, the line has a negative slope contrary to our expectations about the hot hand effect. This model is only able to correctly classify <strong>54.6%</strong> of a test set of shots, which is barely better than flipping a coin. </p>
+
+<p><img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/website%20reports/streak_distributions.png?raw=true" alt="Streak Distribution"></p>
+
+<p>The histogram figures displays the distribution of the <code>previous_streak</code> variable depending on whether the shot was missed or made. The distributions appear to be almost identical whether the shot is missed or made with the quantity of shots missed being greater than the amount made at about each value of <code>previous_streak</code>.</p>
+
+<p>If <code>previous_streak</code> were more likely to be associated with a made shot, then we would see the made distribution more shifted to the right and the missed distribution more shifted to the left in the above figure, but this is obviously not the case and is what is driving the above results in the baseline model.</p>
+
+<h3>
+<a id="a-more-robust-model" class="anchor" href="#a-more-robust-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>A more robust model</h3>
+
+<p><img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/visuals/class%20rate%20versus%20predictors.png?raw=true" alt="Logit Model as number of predictors increases"></p>
+
+<p>Adding in more predictors improves both the model's accuracy as well as the significance of the <code>previous_streak</code> variable (regression results displayed below). This model implies that for an increase in streak of one unit, this only affects the probability of making the next shot by about or less than 1%. Furthermore, this effect on probability is a decrease, i.e. the exact opposite of what we expect to see if the hot hand were true. If anything, a shooter on a streak becomes less likely to make their next shot. These results remain similar if we restrict the <code>previous_streak</code> variable to just positive values.</p>
+
+<p>As we add more predictors, the classification rate improves with the biggest jump due to the addition of the shot distance variable. The predictors we decided to use can be seen below the figure.</p>
+
+<h2>
+<a id="player-by-player" class="anchor" href="#player-by-player" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Player by Player</h2>
+
+<p><img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/visuals/STDvsShots.JPG?raw=true" alt="Shots Taken vs. Distance Variance"></p>
+
+<p>We chose to analyze players who take many shots and have a high distance variance. We did this to avoid picking players who only go for layups or players who only take three-point shots, and we chose to pick players who take more shots because players with more shots have a higher chance of being on a streak. </p>
+
+<p><img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/visuals/Top20Players%20Model%20Values.JPG?raw=true" alt="Top 20 Players"></p>
+
+<p>The top 20 players are listed above. We fit our robust hot hand model to each and list the model parameters and performance.</p>
+
+<p><img src="https://github.com/kylekwong/cs109_hot_hand/blob/master/website%20reports/player_coefficients.png?raw=true" alt="20 Players Analysis"></p>
+
+<p><strong>The hot hand effect varies for our top 20 players.</strong> If we fit models for individual players, the hot hand effect varies in both magnitude and sign. There is about an equal distribution of negative and positive estimated coefficients which resonates with our finding that the streak metric is generally an estimated zero when the model is run on the whole dataset. These are visualized in graphical and tabular images below.</p>
+
+<p>Unfortunately, most of these estimates have p-values greater than .05 or .1 indicating that our estimates are not significant. Interestingly enough though is that the only player to have a significant estimate is Steph Curry (likely because he takes a large amount of shots). Steph's hot hand effect is estimated to be a negative coefficient though that implies as Steph makes an additional shot in a streak, his probability of making the next shot decreases by about 8% (which is pretty significant in magnitude). The player with the largest positive hot hand effect is Derrick Rose whose probability of making the next shot increases by about 5% for each additional shot he makes in a streak.</p>
+
+<p>Furthermore, it is important to consider multiple hypothesis testing as we create separate models for each player. Because the player's estimates are likely independent, we can choose our cut off value of significance as <code>.05/20 = 0.00256</code>. This would imply that none of our estimates are significant. In the future, it may be useful to have data on players from multiple seasons and with additional observations, we may gain greater statistical precision.</p>
+
+<h2>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h2>
 
 <p>Project by Toni Divic (<a href="https://github.com/tonidivic" class="user-mention">@tonidivic</a>), Kyle Kwong (<a href="https://github.com/kylekwong" class="user-mention">@kylekwong</a>), Thomas O'Shea (<a href="https://github.com/thomasoshea" class="user-mention">@thomasoshea</a>), and Charles Weber (<a href="https://github.com/rubbadubcdub" class="user-mention">@rubbadubcdub</a>).</p>
 
