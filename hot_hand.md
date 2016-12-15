@@ -47,9 +47,12 @@ If `previous_streak` were more likely to be associated with a made shot, then we
 
 ![Logit Model as number of predictors increases](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/class%20rate%20versus%20predictors.png?raw=true)
 
+As we add more predictors, the classification rate improves with the biggest jump due to the addition of the shot distance variable. The predictors we decided to use can be seen below the figure.
+
 Adding in more predictors improves both the model's accuracy as well as the significance of the `previous_streak` variable (regression results displayed below). This model implies that for an increase in streak of one unit, this only affects the probability of making the next shot by about or less than 1%. Furthermore, this effect on probability is a decrease, i.e. the exact opposite of what we expect to see if the Hot Hand were true. If anything, a shooter on a streak becomes less likely to make their next shot. These results remain similar if we restrict the `previous_streak` variable to just positive values.
 
-As we add more predictors, the classification rate improves with the biggest jump due to the addition of the shot distance variable. The predictors we decided to use can be seen below the figure.
+
+
 
 ## Player by Player
 ![Shots Taken vs. Distance Variance](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/STDvsShots.JPG?raw=true)

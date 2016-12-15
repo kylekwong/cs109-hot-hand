@@ -52,9 +52,9 @@ This bar graph shows us that the top players we’re considering appear to go on
 At this point we felt like we needed to further examine if these players are indeed what we truly consider top players. Looking at the names of these players, they aren’t what we’d expect the superstars of the league to be. Indeed most of these players play center and are considered ‘big men’; essentially, they’re the players who play low in the post near the hoop, and put up shots from a very close distance. Naturally we would expect that players shooting that close to the basket would have a higher Field Goal %, so we wanted to see if shot distance was concentrated for these players. We created a distribution chart of Shot Distance vs. Closest Defender Distance for each of these 5 players to see if their shots were clustered around the basket.
 
 ![](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/Data%20Exploration%20and%20Visualization%20Writeup_images/image005.png?raw=true)
-![](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/Data%20Exploration%20and%20Visualization%20Writeup_images/image004.png?raw=true)
+![](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/Data%20Exploration%20and%20Visualization%20Writeup_images/image006.png?raw=true)
 
-These distributions do indeed show that the majority of these players’ shots are from very close. For the sake of our analysis, we would like our top players to have greater shot distance variance. This preliminary exploration shows that we’ll have to adjust our criteria for what we define as a Top Player. This adjustment is explained in greater detail in our Player by Player Analysis of the Hot Hand Modeling page. 
+These distributions do indeed show that the majority of these players’ shots are from very close. For the sake of our analysis, we would like our top players to have greater shot distance variance. This preliminary exploration shows that we’ll have to adjust our criteria for what we define as a Top Player. This adjustment is explained in greater detail in our Player by Player Analysis of the Hot Hand Modeling page.
 
 
 ## Overview
