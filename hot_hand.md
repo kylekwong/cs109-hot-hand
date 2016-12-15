@@ -37,20 +37,24 @@ The histogram figures displays the distribution of the `previous_streak` variabl
 If `previous_streak` were more likely to be associated with a made shot, then we would see the made distribution more shifted to the right and the missed distribution more shifted to the left in the above figure, but this is obviously not the case and is what is driving the above results in the baseline model.
 
 ### A more robust model
+A model based solely on `previous_streak` doesn't take into account a variety of factors that may affect the shot, such as difficulty of the shot or the quality of defense against the shooter. In order to improve our model, we wanted to control for these factors by including them as predictors in our logistic regression model. 
+
 **Improving the Classification Rate**
 {: style="text-align: center"}
 
 ![Logit Model as number of predictors increases](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/class%20rate%20versus%20predictors.png?raw=true)
 
-As we add more predictors, the classification rate improves with the biggest jump due to the addition of the shot distance variable. The predictors we decided to use can be seen below the figure.
+As we add more predictors, the classification rate improves with the biggest jump due to the addition of the shot distance variable. The predictors we decided to use are listed along the x-axis of the figure above. 
 
-Adding in more predictors improves both the model's accuracy as well as the significance of the `previous_streak` variable (regression results displayed below). This model implies that for an increase in streak of one unit, this only affects the probability of making the next shot by about or less than 1%. Furthermore, this effect on probability is a decrease, i.e. the exact opposite of what we expect to see if the Hot Hand were true. If anything, a shooter on a streak becomes less likely to make their next shot. These results remain similar if we restrict the `previous_streak` variable to just positive values.
+Adding in more predictors improves both the model's accuracy as well as the significance of the `previous_streak` variable (regression results displayed below). This model implies that for an increase in streak of one unit, this only affects the probability of making the next shot by about or less than 1%. Furthermore, this effect on probability is a decrease, i.e. the exact opposite of what we expect to see if the Hot Hand were true. If anything, a shooter on a streak becomes less likely to make their next shot. The p-value of the `previous_streak` coefficient is also  < 0.05, showing us that this slight negative effect is significant. These results remain similar if we restrict the `previous_streak` variable to just positive values. The regression results show us `fg_percent` is the greatest predictor of shot probability, which is expected. Overall these regression results imply that from a league-wide perspective the Hot Hand theory is a fallacy.
 
 ![robust_model](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/robust_logit_results.png?raw=true)
 
 
+
+
 ## Player by Player
-We chose to analyze players who take many shots and have a high distance variance. We did this to avoid picking players who only go for layups or players who only take three-point shots, and we chose to pick players who take more shots because players with more shots have a higher chance of being on a streak. 
+We next wanted to move our analysis from a league-wide perspective to an individual player analysis to see if there are any individuals that may display a Hot Hand. We chose to analyze players who take many shots and have a high distance variance. We did this to avoid picking players who only go for layups or players who only take three-point shots, and we chose to pick players who take more shots because players with more shots have a higher chance of being on a streak. 
 
 ![Shots Taken vs. Distance Variance](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/STDvsShots.JPG?raw=true)
 
@@ -60,17 +64,19 @@ In order to generate this player score, we calculated two statistics for each pl
 
 The top 20 players are listed above. We fit our robust Hot Hand model to each and list the model parameters and performance.
 
+**The Hot Hand effect varies for our top 20 players.** If we fit models for individual players, the Hot Hand effect varies in both magnitude and sign. There is about an equal distribution of negative and positive estimated coefficients which resonates with our finding that the streak metric is generally an estimated zero when the model is run on the whole dataset. These are visualized in the graph below.
+
+**Important Note**: As we evaluate the model on a large number of players, we have to keep in mind the issue of Multiple Comparisons. This idea says that as we're comparing p-values across a large number of independent samples, there is a high chance of at least one having a p-value < 0.05 due to probability distribution alone and not necessarily due to significance. We have to adjust what our p-value cutoff for significance is. In this case, multiple comparisons across 20 samples says our proper p-value will be 0.05/20 = 0.00256.
+
+Unfortunately, most of our `previous_streak` coefficient estimates have p-values greater than .05 or .1 indicating that our estimates are not significant. <!-- Interestingly enough though is that the only player to have a significant estimate is Steph Curry (likely because he takes a large amount of shots). Steph's Hot Hand effect is estimated to be a negative coefficient though that implies as Steph makes an additional shot in a streak, his probability of making the next shot decreases by about 8% (which is pretty significant in magnitude). The player with the largest positive Hot Hand effect is Derrick Rose whose probability of making the next shot increases by about 5% for each additional shot he makes in a streak. --> We find nobody significant below the 0.00256 threshold. 
+
 ![20 Players Analysis](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/player_coefficients.png?raw=true)
 
-**The Hot Hand effect varies for our top 20 players.** If we fit models for individual players, the Hot Hand effect varies in both magnitude and sign. There is about an equal distribution of negative and positive estimated coefficients which resonates with our finding that the streak metric is generally an estimated zero when the model is run on the whole dataset. These are visualized in graphical and tabular images below.
-
-Unfortunately, most of these estimates have p-values greater than .05 or .1 indicating that our estimates are not significant. <!-- Interestingly enough though is that the only player to have a significant estimate is Steph Curry (likely because he takes a large amount of shots). Steph's Hot Hand effect is estimated to be a negative coefficient though that implies as Steph makes an additional shot in a streak, his probability of making the next shot decreases by about 8% (which is pretty significant in magnitude). The player with the largest positive Hot Hand effect is Derrick Rose whose probability of making the next shot increases by about 5% for each additional shot he makes in a streak. --> We find nobody significant below the 0.00256 threshold. 
-
-Furthermore, it is important to consider multiple hypothesis testing as we create separate models for each player. Because the player's estimates are likely independent, we can choose our cut off value of significance as `.05/20 = 0.00256`. This would imply that none of our estimates are significant. In the future, it may be useful to have data on players from multiple seasons and with additional observations, we may gain greater statistical precision.
+These results show us that none of our estimates are significant. With these findings, we don't find any support for the Hot Hand theory among our Top 20 players, further indicating it is a fallacy. In the future, it may be useful to have data on players from multiple seasons and with additional observations, we may gain greater statistical precision.
 
 
 ### Testing Binary Heat
-In order to further test the Hot Hand theory, we decided to run our regression using binary-encoded variables for streak instead of the previous_streak variable. We believed that this would examine the possibility that when a player is hot, it doesn't matter "how hot" he is (i.e. how long his streak is), but rather simply if he is hot or not. 
+In order to further test the Hot Hand theory, we decided to run our regression using binary-encoded variables for streak instead of the `previous_streak` variable. We believed that this would examine the possibility that when a player is hot, it doesn't matter "how hot" he is (i.e. how long his streak is), but rather simply if he is hot or not. 
 
 Three different binary variables were tested. "Hot 2" was an indicator of whether or not that player's previous streak was greater than or equal to 2. "Hot 3" was an indicator of whether or not the previous streak was greater than or equal to 3, and "Hot 4" was an indicator of whether or not the previous streak was greater than or equal to 4.
 
@@ -82,4 +88,4 @@ The results of this regression can be found in the table above. The columns for 
 
 
 ## Conclusions
-Despite fitting individual logistic regression models on our Top 20 players, and testing for both binary and non-binary streaks, we still found that previous_streak lacked any strong predictive value. No models found previous_streak to be a significant factor in a shot’s probability. It appears therefore that the Hot Hand theory exists for neither individuals nor the league as a whole, suggesting that the Hot Hand is in fact a fallacy.
+Despite fitting individual logistic regression models on our Top 20 players, and testing for both binary and non-binary streaks, we found that `previous_streak` lacked any strong predictive value. No models found `previous_streak` to be a significant factor in a shot’s probability. It appears therefore that the Hot Hand theory exists for neither individuals nor the league as a whole, suggesting that the Hot Hand is indeed a fallacy.
