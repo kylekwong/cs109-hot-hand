@@ -11,14 +11,25 @@ body {
 
 a h1 {
   color: white;
-  text-decoration: none;
-}
+  text-decoration: none; }
 
 a {
   color: #1e6bb8;
   text-decoration: none; }
   a:hover {
     text-decoration: underline; }
+
+img[alt=robust_model] {
+  width: 65%;
+  height: 65%; }
+
+img[alt="Binary Heat Table"] {
+  width: 65%;
+  height: 65%; }
+
+img[alt=curry] {
+  width: 75%;
+  height: 75%; }
 
 .btn {
   display: inline-block;
@@ -97,6 +108,7 @@ a {
       font-size: 1rem; } }
 
 .main-content {
+  text-align: justify;
   word-wrap: break-word; }
   .main-content :first-child {
     margin-top: 0; }

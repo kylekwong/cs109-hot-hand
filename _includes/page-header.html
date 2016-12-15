@@ -1,6 +1,8 @@
 <section class="page-header">
   <a href="{{ site.baseurl }}"><h1 class="project-name">{{ site.title }}</h1></a>
   <h2 class="project-tagline">{{ site.tagline }}</h2>
-  <a href="https://github.com/kylekwong/cs109-hot-hand" class="btn">View on GitHub</a>
-  <a href="https://github.com/kylekwong/cs109-hot-hand/archive/master.zip" class="btn">Download .zip</a>
+  <a href="{{ site.base_url }}{% if jekyll.environment != "dev"%}/cs109-hot-hand{% endif %}/data.html" class="btn">Data Visualization</a>
+  <a href="{{ site.base_url }}{% if jekyll.environment != "dev"%}/cs109-hot-hand{% endif %}/hot_hand.html" class="btn">Hot Hand Analysis</a>
+  <a href="{{ site.base_url }}{% if jekyll.environment != "dev"%}/cs109-hot-hand{% endif %}/clutch_factor.html" class="btn">Clutch Factor Analysis</a>
+  <a href="{{ site.base_url }}{% if jekyll.environment != "dev"%}/cs109-hot-hand{% endif %}/conclusions.html" class="btn">Concluding Thoughts</a>
 </section>

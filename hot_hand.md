@@ -2,9 +2,6 @@
 layout: default
 ---
 
-# Motivation
-Widely held to be true by many sports fans, the "Hot Hand" theory is the belief that a person who has experienced success with a seemingly random event has a greater chance of further success in additional attempts. In the context of basketball, this is the belief that as a player continuously makes successful, sequential shots (i.e. when they're on a streak), their next shot has a higher chance of success than if they were not on a streak. Most studies in the past have shown that the Hot Hand theory is fallacious [1]; however, a recent study has provided some convincing evidence that the Hot Hand theory might not be so far-fetched after all [2]. The goal of our project is to see for ourselves if the Hot Hand theory is in fact merely a falsehood. 
-
 # How the Hot Hand would Look
 A statistical model of the Hot Hand might look something like 
 
@@ -51,13 +48,15 @@ As we add more predictors, the classification rate improves with the biggest jum
 
 Adding in more predictors improves both the model's accuracy as well as the significance of the `previous_streak` variable (regression results displayed below). This model implies that for an increase in streak of one unit, this only affects the probability of making the next shot by about or less than 1%. Furthermore, this effect on probability is a decrease, i.e. the exact opposite of what we expect to see if the Hot Hand were true. If anything, a shooter on a streak becomes less likely to make their next shot. These results remain similar if we restrict the `previous_streak` variable to just positive values.
 
-
+![robust_model](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/robust_logit_results.png?raw=true)
 
 
 ## Player by Player
+We chose to analyze players who take many shots and have a high distance variance. We did this to avoid picking players who only go for layups or players who only take three-point shots, and we chose to pick players who take more shots because players with more shots have a higher chance of being on a streak. 
+
 ![Shots Taken vs. Distance Variance](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/STDvsShots.JPG?raw=true)
 
-We chose to analyze players who take many shots and have a high distance variance. We did this to avoid picking players who only go for layups or players who only take three-point shots, and we chose to pick players who take more shots because players with more shots have a higher chance of being on a streak. 
+In order to generate this player score, we calculated two statistics for each player; their average number of shots per game and the standard deviation of their shot distance. We then scaled these values so that they equaled a representative value between 0 and 1. Finally, we added the two scaled values to combine them into one score to represent each player. In the top right corner of the graph above, we can see plots of the players that we will examine (i.e. the players with the highest values in both categories).
 
 ![Top 20 Players](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/Top20Players%20Model%20Values.JPG?raw=true)
 
@@ -69,21 +68,20 @@ The top 20 players are listed above. We fit our robust Hot Hand model to each an
 
 Unfortunately, most of these estimates have p-values greater than .05 or .1 indicating that our estimates are not significant. <!-- Interestingly enough though is that the only player to have a significant estimate is Steph Curry (likely because he takes a large amount of shots). Steph's Hot Hand effect is estimated to be a negative coefficient though that implies as Steph makes an additional shot in a streak, his probability of making the next shot decreases by about 8% (which is pretty significant in magnitude). The player with the largest positive Hot Hand effect is Derrick Rose whose probability of making the next shot increases by about 5% for each additional shot he makes in a streak. --> We find nobody significant below the 0.00256 threshold. 
 
-
 Furthermore, it is important to consider multiple hypothesis testing as we create separate models for each player. Because the player's estimates are likely independent, we can choose our cut off value of significance as `.05/20 = 0.00256`. This would imply that none of our estimates are significant. In the future, it may be useful to have data on players from multiple seasons and with additional observations, we may gain greater statistical precision.
+
 
 ### Testing Binary Heat
 In order to further test the Hot Hand theory, we decided to run our regression using binary-encoded variables for streak instead of the previous_streak variable. We believed that this would examine the possibility that when a player is hot, it doesn't matter "how hot" he is (i.e. how long his streak is), but rather simply if he is hot or not. 
 
 Three different binary variables were tested. "Hot 2" was an indicator of whether or not that player's previous streak was greater than or equal to 2. "Hot 3" was an indicator of whether or not the previous streak was greater than or equal to 3, and "Hot 4" was an indicator of whether or not the previous streak was greater than or equal to 4.
 
-The results of this regression can be found in the table below. The columns for each variable name contain the coefficient calculated by our regression, and the column next to each variable (labeled p-Value#) is the corresponding p-value to the coefficient in the column to its left. Once again, due to multiple comparisons and a lower threshold for statistical significance, none of the players were found to have a statistically significant coefficient on any of the binary streak methods, further proving that the hot-hand is indeed dead.
-
 ![Binary Heat Table](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/binary_heat.jpg?raw=true)
+
+The results of this regression can be found in the table above. The columns for each variable name contain the coefficient calculated by our regression, and the column next to each variable (labeled p-Value#) is the corresponding p-value to the coefficient in the column to its left. Once again, due to multiple comparisons and a lower threshold for statistical significance, none of the players were found to have a statistically significant coefficient on any of the binary streak methods, further proving that the hot-hand is indeed dead.
+
+![Binary Bars](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/binarybars.png?raw=true)
+
 
 ## Conclusions
 Despite fitting individual logistic regression models on our Top 20 players, and testing for both binary and non-binary streaks, we still found that previous_streak lacked any strong predictive value. No models found previous_streak to be a significant factor in a shot’s probability. It appears therefore that the Hot Hand theory exists for neither individuals nor the league as a whole, suggesting that the Hot Hand is in fact a fallacy.
-
-## References
-1. Gilovich, Thomas et al. “The Hot Hand in Basketball: On the Misperception of Random Sequences.” Cognitive Psychology, vol. 17, no. 3, 1985, pp. 295–314. 
-2. Bocskocsky, Andrew et al. “The Hot Hand: A New Approach to an Old ‘Fallacy.’” MIT Sloan Analytics Conference, 28 Feb. 2014.
