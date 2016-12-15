@@ -3,6 +3,7 @@ layout: default
 ---
 
 # Extending our Analysis: The Clutch Factor
+{: style="text-align: center"}
 
 ## Introduction 
 After completing our analysis of the Hot Hand theory, we wanted to apply a similar analysis to another theory in basketball, the clutch factor. There is a perception among players and fans alike that certain players elevate their performance in important moments, such as when the score is close or the game is in its final minutes. The idea is that “clutch” players are more likely to make these big shots in these critical moments. This is a similar perception to the Hot Hand with streakiness, and therefore we believe that a similar analysis will allow us to explore if the clutch factor is another fallacy, or may actually be true. 

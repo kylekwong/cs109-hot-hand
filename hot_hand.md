@@ -1,15 +1,17 @@
 ---
 layout: default
 ---
+# Hot Hand Analysis
+{: style="text-align: center"}
 
-# How the Hot Hand would Look
+## How the Hot Hand would Look
 A statistical model of the Hot Hand might look something like 
 
 ![Logistic Function](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/positive%20logit%20model.png?raw=true)
 
 Depicted above is a logistic regression classifier that predicts a binary outcome (1 or 0 or in the case of the Hot Hand, shot made or missed) given some predictor. In the case of the Hot Hand, that predictor (the variable along the x axis) is the shooter’s previous streak. If the logistic regression predicts that the probability of making a shot increases as the player’s streak increases, this indicates the player has the Hot Hand.
 
-# Methods
+## Methods
 We extract publicly available shot data from the 2013-14 NBA season containing information on the game, player, and other factors in which the shot occurred. From this data, we are able to construct a previous streak metric which will serve as our primary predictor in our analysis. The previous streak (`PreviousStreak` and `previous_streak`, used interchangeably) metric is equal to the number of shots made in a row (or missed in a row) prior to the shot in question. For consecutive misses, the value of the previous streak variable is negative.
 
 We then fit a logistic regression model:
@@ -18,11 +20,11 @@ We then fit a logistic regression model:
 
 where X<sub>s</sub> represents a vector of shot information including shot distance, closest defender’s distance, shooter’s overall field goal percentage, shot clock, final margin of the game, amongst other predictors. β<sub>1</sub> represents the Hot Hand effects, i.e. the increase in probability of making a shot for each addition to a player’s streak.
 
-# Results
+## Results
 
-## NBA-Wide
+### NBA-Wide
 
-### Single Predictor Model
+#### Single Predictor Model
 The baseline logistic regression model on the entire dataset returns a very small coefficient and one that is insignificant with a large standard error as you can see in the below output.
 
 ![Logit Model with 1 Predictor](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/SpecificLogitModel.JPG?raw=true)
@@ -36,7 +38,7 @@ The histogram figures displays the distribution of the `previous_streak` variabl
 
 If `previous_streak` were more likely to be associated with a made shot, then we would see the made distribution more shifted to the right and the missed distribution more shifted to the left in the above figure, but this is obviously not the case and is what is driving the above results in the baseline model.
 
-### A more robust model
+#### A more robust model
 A model based solely on `previous_streak` doesn't take into account a variety of factors that may affect the shot, such as difficulty of the shot or the quality of defense against the shooter. In order to improve our model, we wanted to control for these factors by including them as predictors in our logistic regression model. 
 
 **Improving the Classification Rate**
@@ -51,9 +53,7 @@ Adding in more predictors improves both the model's accuracy as well as the sign
 ![robust_model](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/robust_logit_results.png?raw=true)
 
 
-
-
-## Player by Player
+### Player by Player
 We next wanted to move our analysis from a league-wide perspective to an individual player analysis to see if there are any individuals that may display a Hot Hand. We chose to analyze players who take many shots and have a high distance variance. We did this to avoid picking players who only go for layups or players who only take three-point shots, and we chose to pick players who take more shots because players with more shots have a higher chance of being on a streak. 
 
 ![Shots Taken vs. Distance Variance](https://github.com/kylekwong/cs109-hot-hand/blob/master/visuals/STDvsShots.JPG?raw=true)
@@ -75,7 +75,7 @@ Unfortunately, most of our `previous_streak` coefficient estimates have p-values
 These results show us that none of our estimates are significant. With these findings, we don't find any support for the Hot Hand theory among our Top 20 players, further indicating it is a fallacy. In the future, it may be useful to have data on players from multiple seasons and with additional observations, we may gain greater statistical precision.
 
 
-### Testing Binary Heat
+#### Testing Binary Heat
 In order to further test the Hot Hand theory, we decided to run our regression using binary-encoded variables for streak instead of the `previous_streak` variable. We believed that this would examine the possibility that when a player is hot, it doesn't matter "how hot" he is (i.e. how long his streak is), but rather simply if he is hot or not. 
 
 Three different binary variables were tested. "Hot 2" was an indicator of whether or not that player's previous streak was greater than or equal to 2. "Hot 3" was an indicator of whether or not the previous streak was greater than or equal to 3, and "Hot 4" was an indicator of whether or not the previous streak was greater than or equal to 4.
