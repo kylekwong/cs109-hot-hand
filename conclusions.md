@@ -2,8 +2,11 @@
 layout: default
 ---
 # Concluding Thoughts
+{: style="text-align: center"}
 In the end we found that across a myriad of models and adjustments, both the Hot Hand and the Clutch Factor appear to be fallacies that aren’t supported by the statistics we utilized. However, despite our findings, the Hot Hand debate is likely to continue as it has done to present day despite decades of arguments against it. Players, coaches, and fans all seem convinced by the effect and likely won’t relinquish the idea until they feel all variables have been properly accounted for. Our analysis was limited by the shot data we had available, so we couldn’t incorporate every possible factor. Information is missing on quality of defender, quality of opposing team, effects of fatigue on a player, among other variables that may affect an individual. It seems that public perception and statistical calculations will be at odds for a long time due to such a large range of factors, and the two sides may never agree. 
 
 Beyond analysis of the Hot Hand for players both individually and league-wide, there is unexplored work to be done on a macroscopic Hot Hand effect for teams: if a team is on a winning streak across multiple games, are their chances of winning their next games higher? It could be interesting to explore how teams as a whole may get hot and see how it affects league standings. There could be multiple factors involved, including strength of opponent, days of rest between games, game location (home vs. away), quality of referees, and many others. This analysis could prove intriguing in trying to predict how well a team might do across a season, and could provide valuable information to players and coaches as they prepare for their schedule.
 
 Overall this type of statistical analysis has proven to be a more and more powerful tool within the sports community as teams and players work to get an edge. Understanding this data and the tools available to analyze it may prove to be the difference in gaining a competitive advantage.
+
+![it's a basketball](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/conclusion.png?raw=true)
