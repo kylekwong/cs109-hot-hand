@@ -29,8 +29,6 @@ The baseline logistic regression model on the entire dataset returns a very smal
 
 The above figures demonstrate how difficult it is to build a useful model with only the `previous_streak` variable. The image displays the logit model and how it would predict whether a shot was made or not depending on the current value of `previous_streak`. If `previous_streak` had a strong correlation with whether the shot was made or not, then the line would have a more dramatic slope. If anything, the line has a negative slope contrary to our expectations about the Hot Hand effect. This model is only able to correctly classify **54.6%** of a test set of shots, which is barely better than flipping a coin. 
 
-
-**Distribution of Streak by Shot Outcome**
 {: style="text-align: center"}
 ![Streak Distribution](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/streak_distributions.png?raw=true)
 
