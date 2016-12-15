@@ -16,7 +16,7 @@ This dataset was almost 100% complete, so we didn’t have to do much processing
 
 We also wanted to make sure that the sample size for each game was large enough to draw conclusions on. It wouldn’t make sense to consider a game in which a given player only shot 1 or 2 times, so we wanted to find a threshold Shots per Game value to eliminate some of these lower shooting games. We found that the mean number of shots per game was 8.9 shots/game, but wanted to visualize this finding further. To do this, we created a histogram for the shots per game for each player.
 
-**INSERT PICTURE HERE**
+![Shots per Game per Player](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/Data%20Exploration%20and%20Visualization%20Writeup_images/image001.png?raw=true)
 
 From this histogram we see that the distribution is skewed towards the left, so a cutoff value of 8.9 shots/game would eliminate a large number of games. Thus, we decided to eliminate all games where the player shot less than 4 times. This eliminated games where players didn’t shoot enough to show meaningful results with regards to hot streaks.
 
@@ -25,7 +25,7 @@ From this histogram we see that the distribution is skewed towards the left, so 
 
 We knew that we wanted to explore how the Hot Hand theory may show up for some of the top players in the league, so we needed to find a way to determine who our top players were. We decided to base this on Field Goal %, which is a metric for what percentage of shots a player makes. For each player in the dataset, we calculated their Field Goal % for the entire season by dividing the total number of made shots in the dataset by the total number of shots taken. We also appended this information as a new column of data along each player in our dataset so it could help in future analysis. We plotted the Field Goal % for each player to see how the league varies and if we may find significantly better players. 
 
-**INSERT PICTURE HERE**
+![Field Goal vs. Player](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/Data%20Exploration%20and%20Visualization%20Writeup_images/image002.png?raw=true)
 
 
 ## Creation of the Current_Streak and Previous_Streak Variables
@@ -45,14 +45,14 @@ This allowed us to keep a running count of how each shot in the dataset affected
 
 For each of our top players, we wanted to see how many streaks they went on over the course of a season. We considered a hot streak to be a streak of 4 or more shots made, and a cold streak a streak of 4 or more shots missed. From this information we were able to examine how streaky our top players are.
 
-**INSERT PICTURE HERE**
+![Streaks for Top Players](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/Data%20Exploration%20and%20Visualization%20Writeup_images/image003.png?raw=true)
 
 This bar graph shows us that the top players we’re considering appear to go on a lot more hot streaks than cold streaks across the season, suggesting they may be streaky shooters that may feel the effect of the Hot Hand. However, this information is not surprising considering we’re examining players with high Field Goal %, so they’re expected to make more shots than they missed.
 
 At this point we felt like we needed to further examine if these players are indeed what we truly consider top players. Looking at the names of these players, they aren’t what we’d expect the superstars of the league to be. Indeed most of these players play center and are considered ‘big men’; essentially, they’re the players who play low in the post near the hoop, and put up shots from a very close distance. Naturally we would expect that players shooting that close to the basket would have a higher Field Goal %, so we wanted to see if shot distance was concentrated for these players. We created a distribution chart of Shot Distance vs. Closest Defender Distance for each of these 5 players to see if their shots were clustered around the basket.
 
-**INSERT PICTURE HERE**
-**INSERT PICTURE HERE**
+![](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/Data%20Exploration%20and%20Visualization%20Writeup_images/image005.png?raw=true)
+![](https://github.com/kylekwong/cs109-hot-hand/blob/master/website%20reports/Data%20Exploration%20and%20Visualization%20Writeup_images/image004.png?raw=true)
 
 These distributions do indeed show that the majority of these players’ shots are from very close. For the sake of our analysis, we would like our top players to have greater shot distance variance. This preliminary exploration shows that we’ll have to adjust our criteria for what we define as a Top Player. This adjustment is explained in greater detail in our Player by Player Analysis of the Hot Hand Modeling page. 
 
